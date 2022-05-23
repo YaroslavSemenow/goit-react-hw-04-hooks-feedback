@@ -1,7 +1,9 @@
 import React from 'react';
 import style from './Feedback.module.css';
+import Section from './Section/Section';
 import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 import Statistics from './Statistics/Statistics';
+import Notification from './Notification/Notification';
 
 class Feedback extends React.Component {
   state = {
@@ -39,22 +41,43 @@ class Feedback extends React.Component {
   }
 
   render() {
+    const {
+      incrementGoodResponses,
+      incrementNeutralResponses,
+      incrementBadResponses,
+    } = this;
+    // const { state, incrementGoodResponses, countPositiveFeedbackPercentage } = this;
+    // const { good, neutral, bad } = state;
+
+    const buttonOptionsArr = Object.keys(this.state);
+    const incrementsArr = [
+      incrementGoodResponses,
+      incrementNeutralResponses,
+      incrementBadResponses,
+    ];
+    const totalFeedback = this.countTotalFeedback();
+
     return (
       <div className={style.container}>
-        <div>
-          <h2>Please leave feedback</h2>
-          <FeedbackOptions />
-        </div>
-        <div>
-          <h2>Statistics</h2>
-          <Statistics
-            good={this.state.good}
-            neutral={this.state.neutral}
-            bad={this.state.bad}
-            total={this.countTotalFeedback()}
-            positivePercentage={this.countPositiveFeedbackPercentage()}
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={buttonOptionsArr}
+            onLeaveFeedback={incrementsArr}
           />
-        </div>
+        </Section>
+        <Section title="Statistics">
+          {totalFeedback > 0 ? (
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          ) : (
+            <Notification message="There is no feedback"></Notification>
+          )}
+        </Section>
       </div>
     );
   }
