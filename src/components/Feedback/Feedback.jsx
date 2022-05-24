@@ -1,11 +1,11 @@
-import React from 'react';
+import { Component } from 'react';
 import style from './Feedback.module.css';
-import Section from './Section/Section';
-import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import Section from './Section';
+import FeedbackOptions from './FeedbackOptions';
 import Statistics from './Statistics/Statistics';
-import Notification from './Notification/Notification';
+import Notification from './Notification';
 
-class Feedback extends React.Component {
+class Feedback extends Component {
   state = {
     good: 0,
     neutral: 0,
@@ -42,14 +42,13 @@ class Feedback extends React.Component {
 
   render() {
     const {
-      state,
       incrementGoodResponses,
       incrementNeutralResponses,
       incrementBadResponses,
       countTotalFeedback,
       countPositiveFeedbackPercentage,
     } = this;
-    const { good, neutral, bad } = state;
+    const { good, neutral, bad } = this.state;
 
     const buttonOptionsArr = Object.keys(this.state);
     const incrementsArr = [
