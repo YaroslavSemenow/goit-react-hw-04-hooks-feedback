@@ -1,11 +1,11 @@
-.options__list {
+.list {
   display: flex;
 }
 
-.options__item:not(:last-child) {
+.item:not(:last-child) {
   margin-right: 10px;
 }
 
-.options__btn {
+.btn {
   text-transform: capitalize;
 }

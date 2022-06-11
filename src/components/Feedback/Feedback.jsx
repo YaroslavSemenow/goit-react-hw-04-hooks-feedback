@@ -12,21 +12,11 @@ class Feedback extends Component {
     bad: 0,
   };
 
-  incrementGoodResponses = () => {
-    this.setState(prevState => ({
-      good: prevState.good + 1,
-    }));
-  };
+  incrementResponses = e => {
+    const nameBtn = e.currentTarget.name;
 
-  incrementNeutralResponses = () => {
     this.setState(prevState => ({
-      neutral: prevState.neutral + 1,
-    }));
-  };
-
-  incrementBadResponses = () => {
-    this.setState(prevState => ({
-      bad: prevState.bad + 1,
+      [nameBtn]: prevState[nameBtn] + 1,
     }));
   };
 
@@ -41,29 +31,18 @@ class Feedback extends Component {
   };
 
   render() {
-    const {
-      incrementGoodResponses,
-      incrementNeutralResponses,
-      incrementBadResponses,
-      countTotalFeedback,
-      countPositiveFeedbackPercentage,
-    } = this;
     const { good, neutral, bad } = this.state;
 
-    const buttonOptionsArr = Object.keys(this.state);
-    const incrementsArr = [
-      incrementGoodResponses,
-      incrementNeutralResponses,
-      incrementBadResponses,
-    ];
-    const totalFeedback = countTotalFeedback();
+    const btnOptions = Object.keys(this.state);
+    const totalFeedback = this.countTotalFeedback();
+    const positiveFeedbackPercentage = this.countPositiveFeedbackPercentage();
 
     return (
       <div className={style.container}>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={buttonOptionsArr}
-            onLeaveFeedback={incrementsArr}
+            options={btnOptions}
+            onLeaveFeedback={this.incrementResponses}
           />
         </Section>
         <Section title="Statistics">
@@ -72,8 +51,8 @@ class Feedback extends Component {
               good={good}
               neutral={neutral}
               bad={bad}
-              total={countTotalFeedback()}
-              positivePercentage={countPositiveFeedbackPercentage()}
+              total={totalFeedback}
+              positivePercentage={positiveFeedbackPercentage}
             />
           ) : (
             <Notification message="There is no feedback"></Notification>

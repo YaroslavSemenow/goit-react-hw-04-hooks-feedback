@@ -3,39 +3,26 @@ import style from './FeedbackOptions.module.css';
 
 export default function FeedbackOptions({ options, onLeaveFeedback }) {
   return (
-    <ul className={style.options__list}>
-      <li className={style.options__item}>
-        <button
-          className={style.options__btn}
-          type="button"
-          onClick={onLeaveFeedback[0]}
-        >
-          {options[0]}
-        </button>
-      </li>
-      <li className={style.options__item}>
-        <button
-          className={style.options__btn}
-          type="button"
-          onClick={onLeaveFeedback[1]}
-        >
-          {options[1]}
-        </button>
-      </li>
-      <li className={style.options__item}>
-        <button
-          className={style.options__btn}
-          type="button"
-          onClick={onLeaveFeedback[2]}
-        >
-          {options[2]}
-        </button>
-      </li>
+    <ul className={style.list}>
+      {options.map(option => {
+        return (
+          <li className={style.item} key={option}>
+            <button
+              className={style.btn}
+              type="button"
+              name={option}
+              onClick={onLeaveFeedback}
+            >
+              {option}
+            </button>
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
 FeedbackOptions.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  onLeaveFeedback: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
+  onLeaveFeedback: PropTypes.func.isRequired,
 };
